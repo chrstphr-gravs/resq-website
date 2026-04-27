@@ -3,177 +3,1348 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ResQ - Personal Safety Device</title>
+<title>ResQ — Stay Safe Anywhere</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 
 <style>
+:root {
+  --red: #C8102E;
+  --red-dark: #8B0000;
+  --red-mid: #E63946;
+  --off-white: #F7F4EF;
+  --warm-white: #FFF8F0;
+  --charcoal: #1A1A1A;
+  --dark-bg: #0D0D0D;
+  --muted: #6B6B6B;
+  --light-muted: #BFBAB5;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #0f0f0f;
-    color: white;
-    text-align: center;
+  font-family: 'DM Sans', sans-serif;
+  background: var(--dark-bg);
+  color: var(--off-white);
+  overflow-x: hidden;
 }
 
-/* HERO */
-header {
-    background: #e63946;
-    padding: 70px 20px;
+/* ---- NAV ---- */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 48px;
+  background: rgba(13,13,13,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(200,16,46,0.15);
 }
 
-header h1 {
-    font-size: 2.5em;
-    margin-bottom: 10px;
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  letter-spacing: 4px;
+  color: var(--red);
+  text-decoration: none;
 }
 
-header p {
-    font-size: 1.2em;
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
 }
 
-/* BUTTONS */
-.btn {
-    display: inline-block;
-    margin: 10px;
-    padding: 12px 25px;
-    background: white;
-    color: #e63946;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: bold;
+.nav-links a {
+  text-decoration: none;
+  color: var(--light-muted);
+  font-size: 0.85rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  transition: color 0.2s;
 }
 
-/* SECTIONS */
+.nav-links a:hover { color: var(--red); }
+
+.nav-cta {
+  background: var(--red);
+  color: white !important;
+  padding: 10px 24px;
+  border-radius: 4px;
+  font-weight: 600 !important;
+  letter-spacing: 1px !important;
+  transition: background 0.2s !important;
+}
+
+.nav-cta:hover { background: var(--red-dark) !important; color: white !important; }
+
+/* ---- HERO ---- */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg-accent {
+  position: absolute;
+  top: 0; right: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--red-dark) 0%, var(--red) 60%, #FF4500 100%);
+  clip-path: polygon(12% 0, 100% 0, 100% 100%, 0% 100%);
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.hero-noise {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 140px 48px 80px 64px;
+  position: relative;
+  z-index: 2;
+  animation: fadeUp 0.9s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(32px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 20px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 2px;
+  background: var(--red);
+}
+
+.hero h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 6vw, 6rem);
+  line-height: 0.95;
+  letter-spacing: 2px;
+  color: var(--off-white);
+  margin-bottom: 28px;
+}
+
+.hero h1 span {
+  color: var(--red);
+  display: block;
+}
+
+.hero-sub {
+  font-size: 1.1rem;
+  line-height: 1.65;
+  color: var(--light-muted);
+  max-width: 440px;
+  margin-bottom: 44px;
+  font-weight: 300;
+}
+
+.hero-btns {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 56px;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 36px;
+  background: var(--red);
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.btn-primary:hover { background: var(--red-dark); transform: translateY(-2px); }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 36px;
+  border: 1.5px solid rgba(200,16,46,0.4);
+  color: var(--off-white);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.btn-secondary:hover { border-color: var(--red); background: rgba(200,16,46,0.08); }
+
+.hero-stats {
+  display: flex;
+  gap: 40px;
+}
+
+.stat { border-left: 2px solid var(--red); padding-left: 16px; }
+
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 2px;
+  color: var(--off-white);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.hero-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  animation: fadeUp 0.9s 0.2s ease both;
+}
+
+.device-visual {
+  position: relative;
+  width: 320px;
+  height: 320px;
+}
+
+.device-glow {
+  position: absolute;
+  inset: -40px;
+  background: radial-gradient(ellipse at center, rgba(200,16,46,0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+
+.device-ring {
+  position: absolute;
+  inset: 20px;
+  border: 2px solid rgba(200,16,46,0.3);
+  border-radius: 50%;
+  animation: spin 12s linear infinite;
+}
+
+.device-ring::after {
+  content: '';
+  position: absolute;
+  top: -4px; left: 50%;
+  width: 8px; height: 8px;
+  background: var(--red);
+  border-radius: 50%;
+  transform: translateX(-50%);
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.device-circle {
+  position: absolute;
+  inset: 60px;
+  background: linear-gradient(145deg, #1e1e1e, #111);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 60px rgba(200,16,46,0.2), inset 0 0 30px rgba(0,0,0,0.5);
+  border: 2px solid rgba(200,16,46,0.2);
+}
+
+.device-icon {
+  font-size: 4rem;
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.device-badge {
+  position: absolute;
+  bottom: 10px;
+  right: -20px;
+  background: var(--red);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  box-shadow: 0 4px 20px rgba(200,16,46,0.4);
+  animation: badge-pop 0.5s 1s ease both;
+}
+
+@keyframes badge-pop {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ---- PROBLEM BAR ---- */
+.problem-bar {
+  background: var(--red);
+  padding: 24px 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.problem-bar p {
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+  letter-spacing: 0.5px;
+}
+
+.problem-bar strong {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+}
+
+/* ---- SECTION BASE ---- */
 section {
-    padding: 50px 20px;
+  padding: 100px 64px;
 }
 
-h2 {
-    color: #e63946;
+.section-label {
+  font-size: 0.7rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 14px;
+  font-weight: 500;
 }
 
-/* FEATURES */
-.features {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  letter-spacing: 2px;
+  line-height: 1;
+  margin-bottom: 20px;
 }
 
-.feature {
-    background: #1c1c1c;
-    padding: 20px;
-    border-radius: 10px;
-    width: 200px;
-    font-size: 1em;
+.section-sub {
+  color: var(--light-muted);
+  font-size: 1rem;
+  line-height: 1.7;
+  max-width: 520px;
+  font-weight: 300;
 }
 
-/* VIDEO */
-.video-container {
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
-    margin: auto;
-    max-width: 800px;
+/* ---- PROBLEM/SOLUTION ---- */
+.problem-solution {
+  background: #111;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
 }
 
-.video-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 10px;
+.ps-col {
+  padding: 80px 64px;
 }
 
-/* CTA */
-.cta {
-    background: #e63946;
-    padding: 40px 20px;
+.ps-col:first-child {
+  border-right: 1px solid rgba(255,255,255,0.06);
 }
 
-/* FOOTER */
+.ps-icon {
+  font-size: 2.5rem;
+  margin-bottom: 24px;
+}
+
+.ps-col h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem;
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+  color: var(--off-white);
+}
+
+.ps-col.solution h2 { color: var(--red); }
+
+.ps-col p {
+  color: var(--light-muted);
+  line-height: 1.75;
+  font-size: 0.98rem;
+  font-weight: 300;
+}
+
+.ps-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.ps-tag {
+  background: rgba(200,16,46,0.12);
+  border: 1px solid rgba(200,16,46,0.25);
+  color: var(--red);
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  padding: 6px 14px;
+  border-radius: 2px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* ---- FEATURES ---- */
+.features-section {
+  background: var(--dark-bg);
+  text-align: center;
+}
+
+.features-section .section-title,
+.features-section .section-sub {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  margin-top: 64px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.feature-card {
+  background: #0f0f0f;
+  padding: 48px 32px;
+  text-align: left;
+  transition: background 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+}
+
+.feature-card:hover { background: #141414; }
+.feature-card:hover::before { transform: scaleX(1); }
+
+.feature-emoji {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.feature-card h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.25rem;
+  color: var(--off-white);
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.feature-card p {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.65;
+  font-weight: 300;
+}
+
+/* ---- HOW IT WORKS ---- */
+.how-section {
+  background: #111;
+}
+
+.how-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  margin-top: 60px;
+}
+
+.how-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.how-step {
+  display: flex;
+  gap: 24px;
+  padding: 32px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  position: relative;
+}
+
+.how-step:last-child { border-bottom: none; }
+
+.step-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.5rem;
+  line-height: 1;
+  color: rgba(200,16,46,0.2);
+  flex-shrink: 0;
+  width: 56px;
+  transition: color 0.2s;
+}
+
+.how-step:hover .step-num { color: var(--red); }
+
+.step-content h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.2rem;
+  color: var(--off-white);
+  margin-bottom: 8px;
+}
+
+.step-content p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.65;
+  font-weight: 300;
+}
+
+.how-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.how-device-wrap {
+  position: relative;
+  text-align: center;
+}
+
+.how-device-bg {
+  width: 280px;
+  height: 280px;
+  background: linear-gradient(135deg, rgba(200,16,46,0.15), rgba(200,16,46,0.03));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 7rem;
+  border: 1px solid rgba(200,16,46,0.15);
+  position: relative;
+}
+
+.floating-label {
+  position: absolute;
+  background: var(--dark-bg);
+  border: 1px solid rgba(200,16,46,0.3);
+  color: var(--off-white);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.float-1 { top: -10px; right: -40px; animation: float 3s ease-in-out infinite; }
+.float-2 { bottom: 20px; left: -60px; animation: float 3s 1s ease-in-out infinite; }
+.float-3 { top: 50%; right: -70px; animation: float 3s 0.5s ease-in-out infinite; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ---- BENEFITS ---- */
+.benefits-section {
+  background: var(--dark-bg);
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 64px;
+}
+
+.benefit-card {
+  background: #111;
+  padding: 40px 32px;
+  border-radius: 2px;
+  border: 1px solid rgba(255,255,255,0.05);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.benefit-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(200,16,46,0.3);
+}
+
+.benefit-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--red), transparent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.benefit-card:hover::after { opacity: 1; }
+
+.benefit-icon {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.benefit-card h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.15rem;
+  color: var(--off-white);
+  margin-bottom: 12px;
+}
+
+.benefit-card p {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.65;
+  font-weight: 300;
+}
+
+/* ---- COMPARISON ---- */
+.comparison-section {
+  background: #111;
+}
+
+.comparison-table {
+  margin-top: 60px;
+  border: 1px solid rgba(255,255,255,0.07);
+  overflow: hidden;
+}
+
+.comp-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.comp-header div {
+  padding: 20px 24px;
+  font-size: 0.78rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.comp-header .resq-col {
+  background: rgba(200,16,46,0.1);
+  color: var(--red) !important;
+  border-left: 2px solid var(--red);
+}
+
+.comp-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.15s;
+}
+
+.comp-row:hover { background: rgba(255,255,255,0.02); }
+.comp-row:last-child { border-bottom: none; }
+
+.comp-row div {
+  padding: 18px 24px;
+  font-size: 0.9rem;
+  color: var(--light-muted);
+  display: flex;
+  align-items: center;
+}
+
+.comp-row .resq-col {
+  background: rgba(200,16,46,0.05);
+  border-left: 2px solid rgba(200,16,46,0.3);
+  color: var(--off-white);
+  font-weight: 500;
+}
+
+.check { color: #22C55E; font-size: 1.1rem; }
+.cross { color: #EF4444; font-size: 1.1rem; }
+
+/* ---- PRICING ---- */
+.pricing-section {
+  background: var(--dark-bg);
+  text-align: center;
+}
+
+.pricing-card {
+  max-width: 480px;
+  margin: 60px auto 0;
+  background: #111;
+  border: 1px solid rgba(200,16,46,0.3);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.pricing-top {
+  background: var(--red);
+  padding: 40px 48px;
+}
+
+.pricing-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 12px;
+}
+
+.pricing-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 5rem;
+  letter-spacing: 4px;
+  color: white;
+  line-height: 1;
+}
+
+.pricing-currency {
+  font-size: 1.5rem;
+  vertical-align: super;
+  letter-spacing: 2px;
+}
+
+.pricing-period {
+  color: rgba(255,255,255,0.7);
+  font-size: 0.85rem;
+  margin-top: 8px;
+  letter-spacing: 1px;
+}
+
+.pricing-body {
+  padding: 40px 48px;
+}
+
+.pricing-features {
+  list-style: none;
+  text-align: left;
+  margin-bottom: 36px;
+}
+
+.pricing-features li {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 0.92rem;
+  color: var(--light-muted);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 300;
+}
+
+.pricing-features li::before {
+  content: '✓';
+  color: var(--red);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.pricing-features li:last-child { border-bottom: none; }
+
+.btn-order {
+  display: block;
+  width: 100%;
+  padding: 18px;
+  background: var(--red);
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-radius: 3px;
+  transition: background 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-order:hover { background: var(--red-dark); }
+
+.pricing-note {
+  margin-top: 16px;
+  font-size: 0.78rem;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
+
+
+
+/* ---- CTA BANNER ---- */
+.cta-banner {
+  background: var(--red);
+  padding: 80px 64px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-banner::before {
+  content: 'RESQ';
+  position: absolute;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20vw;
+  color: rgba(255,255,255,0.05);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  letter-spacing: 20px;
+  white-space: nowrap;
+}
+
+.cta-banner h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  letter-spacing: 3px;
+  color: white;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.cta-banner p {
+  color: rgba(255,255,255,0.8);
+  font-size: 1.05rem;
+  margin-bottom: 40px;
+  font-weight: 300;
+  position: relative;
+}
+
+.cta-banner .btn-white {
+  display: inline-block;
+  background: white;
+  color: var(--red);
+  padding: 18px 48px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-radius: 3px;
+  text-decoration: none;
+  transition: transform 0.15s, box-shadow 0.15s;
+  position: relative;
+}
+
+.cta-banner .btn-white:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+
+/* ---- CONTACT/FOOTER ---- */
 footer {
-    background: #000;
-    padding: 20px;
-    font-size: 0.9em;
+  background: #080808;
+  padding: 64px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.footer-brand .nav-logo {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.footer-brand p {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.65;
+  font-weight: 300;
+  max-width: 320px;
+}
+
+.footer-contact h4 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 3px;
+  color: var(--red);
+  margin-bottom: 24px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+  color: var(--light-muted);
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.contact-item:hover { color: var(--off-white); }
+
+.contact-icon {
+  width: 36px; height: 36px;
+  background: rgba(200,16,46,0.1);
+  border: 1px solid rgba(200,16,46,0.2);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.footer-bottom {
+  grid-column: 1 / -1;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding-top: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-bottom p {
+  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.5px;
+}
+
+.footer-bottom .tagline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 3px;
+  color: rgba(200,16,46,0.5);
+}
+
+/* ---- SCROLL REVEAL ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 900px) {
+  nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-right { display: none; }
+  .hero-left { padding: 120px 24px 60px; }
+  section { padding: 64px 24px; }
+  .problem-solution { grid-template-columns: 1fr; }
+  .ps-col { padding: 48px 24px; }
+  .features-grid { grid-template-columns: 1fr 1fr; }
+  .how-grid { grid-template-columns: 1fr; gap: 40px; }
+  .benefits-grid { grid-template-columns: 1fr; }
+  .comp-header, .comp-row { grid-template-columns: 2fr repeat(4, 0.7fr); }
+  .comp-header div, .comp-row div { padding: 14px 10px; font-size: 0.75rem; }
+  footer { grid-template-columns: 1fr; padding: 40px 24px; }
+  .cta-banner { padding: 60px 24px; }
 }
 </style>
-
 </head>
 
 <body>
 
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">ResQ</a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#pricing" class="nav-cta">Order Now</a></li>
+  </ul>
+</nav>
+
 <!-- HERO -->
-<header>
-    <h1>Stay Safe Anytime, Anywhere with ResQ</h1>
-    <p>Wearable safety device with instant SOS & real-time GPS tracking</p>
-    <a href="#" class="btn">Get Yours Now</a>
-    <a href="#" class="btn">Watch Demo</a>
-</header>
+<section class="hero">
+  <div class="hero-bg-accent"></div>
+  <div class="hero-noise"></div>
 
-<!-- PROBLEM -->
-<section>
-    <h2>Do you feel unsafe when traveling alone?</h2>
-    <p>
-        Phones are slow during emergencies. Unlocking, dialing, and waiting
-        can cost precious seconds when you need help the most.
-    </p>
+  <div class="hero-left">
+    <p class="hero-eyebrow">Personal Safety Device</p>
+    <h1>Stay Safe.<br><span>Anywhere.</span></h1>
+    <p class="hero-sub">One pull. Instant SOS. Real-time GPS. ResQ is the wearable device that connects you to help when seconds count.</p>
+    <div class="hero-btns">
+      <a href="#pricing" class="btn-primary">⚡ Order Now — ₱1,500</a>
+
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">70%</div>
+        <div class="stat-label">of women feel unsafe traveling alone</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">1</div>
+        <div class="stat-label">Pull to activate SOS</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">80%</div>
+        <div class="stat-label">Viability rating</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="device-visual">
+      <div class="device-glow"></div>
+      <div class="device-ring"></div>
+      <div class="device-circle">
+        <div class="device-icon">🚨</div>
+      </div>
+      <div class="device-badge">Pull to Activate</div>
+    </div>
+  </div>
 </section>
 
-<!-- SOLUTION -->
-<section>
+<!-- PROBLEM BAR -->
+<div class="problem-bar">
+  <p><strong>THE PROBLEM:</strong> &nbsp; Phones are too slow in emergencies. Unlocking, dialing, waiting — every second matters.</p>
+</div>
+
+<!-- PROBLEM / SOLUTION -->
+<div class="problem-solution">
+  <div class="ps-col reveal">
+    <div class="ps-icon">⚠️</div>
+    <h2>The Gap in Safety</h2>
+    <p>People in public spaces — especially students and women who travel alone — struggle to quickly alert others during personal safety emergencies. Current phone-based solutions are slow, unreliable under stress, and fail when it matters most.</p>
+    <p style="margin-top:16px;">This leads to delayed emergency response, increased vulnerability, and a constant undercurrent of fear in everyday life.</p>
+    <div class="ps-tags">
+      <span class="ps-tag">Delayed Response</span>
+      <span class="ps-tag">Phone Dependency</span>
+      <span class="ps-tag">Urban Safety Gaps</span>
+    </div>
+  </div>
+  <div class="ps-col solution reveal">
+    <div class="ps-icon">🛡️</div>
     <h2>Meet ResQ</h2>
-    <p>
-        A compact wearable device that sends instant SOS alerts and real-time GPS location
-        to trusted contacts with just one pull.
-    </p>
-</section>
+    <p>A GPS-enabled personal safety alarm — a compact wearable device with a simple pull-pin that immediately sends real-time location alerts to your trusted contacts and triggers a loud alarm.</p>
+    <p style="margin-top:16px;">No unlocking. No searching. No hesitation. Just pull and help is on the way.</p>
+    <div class="ps-tags">
+      <span class="ps-tag">Instant SOS</span>
+      <span class="ps-tag">Real-Time GPS</span>
+      <span class="ps-tag">Mobile App Alerts</span>
+    </div>
+  </div>
+</div>
 
 <!-- FEATURES -->
-<section>
-    <h2>Key Features</h2>
-    <div class="features">
-        <div class="feature">🚨 Pull-Pin SOS Activation</div>
-        <div class="feature">📍 Real-Time GPS Tracking</div>
-        <div class="feature">🔊 Loud Emergency Alarm</div>
-        <div class="feature">📱 Mobile App Alerts</div>
+<section class="features-section" id="features">
+  <p class="section-label reveal">Core Features</p>
+  <h2 class="section-title reveal">Built for the<br>moment that matters.</h2>
+  <p class="section-sub reveal">Every feature of ResQ is engineered around one goal: getting you help faster than any phone ever could.</p>
+
+  <div class="features-grid reveal">
+    <div class="feature-card">
+      <span class="feature-emoji">🔴</span>
+      <h3>Pull-Pin SOS Activation</h3>
+      <p>A single tug of the pin triggers an instant emergency alert — no buttons, no screens, no delay. Works even when you can't look at your device.</p>
     </div>
+    <div class="feature-card">
+      <span class="feature-emoji">📍</span>
+      <h3>Real-Time GPS Tracking</h3>
+      <p>The moment SOS is triggered, your exact GPS coordinates are transmitted to trusted contacts. They always know exactly where you are.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-emoji">🔊</span>
+      <h3>Loud Emergency Alarm</h3>
+      <p>A high-decibel alarm sounds immediately upon activation — drawing attention and deterring threats in public or isolated spaces.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-emoji">📱</span>
+      <h3>Mobile App Integration</h3>
+      <p>Paired with a mobile app, trusted contacts receive instant push alerts with your live location — keeping family and friends informed in real time.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <p class="section-label reveal">Step by Step</p>
+  <h2 class="section-title reveal">How ResQ works</h2>
+  <p class="section-sub reveal">From threat to response in seconds — not minutes.</p>
+
+  <div class="how-grid">
+    <div class="how-steps reveal">
+      <div class="how-step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <h3>Wear it daily</h3>
+          <p>Clip ResQ to your bag, keychain, or clothing. Its compact design means you always have it without thinking about it.</p>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <h3>Pull the pin</h3>
+          <p>In an emergency, one pull activates everything simultaneously — alarm, GPS capture, and contact alerts.</p>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <h3>Contacts get alerted</h3>
+          <p>Your trusted contacts instantly receive a push notification with your real-time GPS location via the ResQ mobile app.</p>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <h3>Help arrives faster</h3>
+          <p>Authorities and loved ones can respond immediately with your exact location — cutting emergency response time dramatically.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="how-visual reveal">
+      <div class="how-device-wrap">
+        <div class="how-device-bg">
+          🔑
+          <div class="floating-label float-1">📍 GPS Activated</div>
+          <div class="floating-label float-2">🔊 Alarm Sounding</div>
+          <div class="floating-label float-3">📱 Alert Sent</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- BENEFITS -->
-<section>
-    <h2>Why Choose ResQ?</h2>
-    <p>
-        ✔ Faster emergency response<br>
-        ✔ Increased safety confidence<br>
-        ✔ Peace of mind for families
-    </p>
-</section>
+<section class="benefits-section">
+  <p class="section-label reveal">Why Choose ResQ</p>
+  <h2 class="section-title reveal">Safety that fits<br>your life.</h2>
 
-<!-- VIDEO -->
-<section>
-    <h2>Watch Demo</h2>
-
-    <div class="video-container">
-        <iframe 
-            src="https://drive.google.com/file/d/1zE2E5NELcMmmyWvXIeRJ0EYX9wJdElIg/preview">
-        </iframe>
+  <div class="benefits-grid reveal">
+    <div class="benefit-card">
+      <div class="benefit-icon">⚡</div>
+      <h3>Faster Emergency Response</h3>
+      <p>By automatically sharing your GPS location the moment you need help, ResQ cuts the time between incident and assistance.</p>
     </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">💪</div>
+      <h3>Increased Safety Confidence</h3>
+      <p>Knowing help is one pull away changes everything. Students, commuters, and solo travelers move more freely and confidently.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">🏠</div>
+      <h3>Peace of Mind for Families</h3>
+      <p>Parents and loved ones can stop worrying. With real-time alerts, they're instantly informed if something goes wrong.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">👜</div>
+      <h3>Compact & Wearable</h3>
+      <p>Small enough to clip anywhere, light enough to forget about — until you need it. ResQ fits seamlessly into any lifestyle.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">🎓</div>
+      <h3>Built for Students</h3>
+      <p>Designed with the daily realities of student commutes in mind. Whether walking to school or riding late at night, you're covered.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">💰</div>
+      <h3>Affordable for Everyone</h3>
+      <p>At only ₱1,500, ResQ makes personal safety technology accessible — not a luxury. Your safety shouldn't depend on your budget.</p>
+    </div>
+  </div>
 </section>
 
-<!-- PRICING / CTA -->
-<section class="cta">
-    <h2>Only ₱1,500</h2>
-    <p>Affordable safety for everyone</p>
-    <a href="#" class="btn">Order Now</a>
+<!-- COMPARISON -->
+<section class="comparison-section">
+  <p class="section-label reveal">Competitor Analysis</p>
+  <h2 class="section-title reveal">ResQ vs. the alternatives</h2>
+  <p class="section-sub reveal">See why ResQ outperforms every other safety solution on the market.</p>
+
+  <div class="comparison-table reveal">
+    <div class="comp-header">
+      <div>Feature</div>
+      <div class="resq-col">ResQ</div>
+      <div>Bella</div>
+      <div>Bronco</div>
+      <div>She's Birdie</div>
+    </div>
+    <div class="comp-row">
+      <div>Pull-Pin SOS Activation</div>
+      <div class="resq-col"><span class="check">✓</span></div>
+      <div><span class="check">✓</span></div>
+      <div><span class="cross">✗</span></div>
+      <div><span class="check">✓</span></div>
+    </div>
+    <div class="comp-row">
+      <div>Real-Time GPS Sharing</div>
+      <div class="resq-col"><span class="check">✓</span></div>
+      <div><span class="cross">✗</span></div>
+      <div><span class="cross">✗</span></div>
+      <div><span class="cross">✗</span></div>
+    </div>
+    <div class="comp-row">
+      <div>Auto Contact Alerts</div>
+      <div class="resq-col"><span class="check">✓</span></div>
+      <div><span class="cross">✗</span></div>
+      <div><span class="cross">✗</span></div>
+      <div><span class="cross">✗</span></div>
+    </div>
+    <div class="comp-row">
+      <div>Mobile App Integration</div>
+      <div class="resq-col"><span class="check">✓</span></div>
+      <div><span class="cross">✗</span></div>
+      <div><span class="cross">✗</span></div>
+      <div><span class="cross">✗</span></div>
+    </div>
+    <div class="comp-row">
+      <div>Loud Emergency Alarm</div>
+      <div class="resq-col"><span class="check">✓</span></div>
+      <div><span class="check">✓</span></div>
+      <div><span class="check">✓</span></div>
+      <div><span class="check">✓</span></div>
+    </div>
+  </div>
 </section>
 
-<!-- CONTACT -->
-<footer>
-    <p>📧 resq.safety@gmail.com</p>
-    <p>📱 facebook.com/resqsafety</p>
-    <p>📍 Metro Manila, Philippines</p>
+
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <p class="section-label reveal">Simple Pricing</p>
+  <h2 class="section-title reveal">One price.<br>Total protection.</h2>
+  <p class="section-sub reveal">No subscriptions required for core features. Just affordable, reliable safety.</p>
+
+  <div class="pricing-card reveal">
+    <div class="pricing-top">
+      <p class="pricing-eyebrow">ResQ Safety Device</p>
+      <div class="pricing-price">
+        <span class="pricing-currency">₱</span>1,500
+      </div>
+      <p class="pricing-period">One-time purchase · Ships to Metro Manila</p>
+    </div>
+    <div class="pricing-body">
+      <ul class="pricing-features">
+        <li>Pull-pin SOS activation hardware</li>
+        <li>Real-time GPS tracking module</li>
+        <li>Loud 120dB emergency alarm</li>
+        <li>Mobile app access (iOS & Android)</li>
+        <li>Instant alerts to trusted contacts</li>
+        <li>Compact, wearable clip design</li>
+        <li>Free shipping within Metro Manila</li>
+      </ul>
+      <a href="mailto:resq.safety@gmail.com?subject=Order%20ResQ%20Device" class="btn-order">Order Now</a>
+      <p class="pricing-note">Contact us to place your order. Cash on delivery available.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <h2>Your safety can't wait.</h2>
+  <p>Join the students and commuters across Metro Manila who trust ResQ every day.</p>
+  <a href="mailto:resq.safety@gmail.com?subject=Order%20ResQ%20Device" class="btn-white">Get ResQ for ₱1,500</a>
+</div>
+
+<!-- FOOTER / CONTACT -->
+<footer id="contact">
+  <div class="footer-brand">
+    <a href="#" class="nav-logo">ResQ</a>
+    <p>A personal safety wearable device developed at Jose Rizal University. Built for students, women, and anyone who deserves to feel safe.</p>
+  </div>
+
+  <div class="footer-contact">
+    <h4>Get in Touch</h4>
+    <a href="mailto:resq.safety@gmail.com" class="contact-item">
+      <div class="contact-icon">📧</div>
+      resq.safety@gmail.com
+    </a>
+    <a href="https://facebook.com/resqsafety" target="_blank" class="contact-item">
+      <div class="contact-icon">📘</div>
+      facebook.com/resqsafety
+    </a>
+    <div class="contact-item">
+      <div class="contact-icon">📍</div>
+      Metro Manila, Philippines
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026 ResQ · Jose Rizal University · All rights reserved.</p>
+    <p class="tagline">Stay Safe. Stay ResQ.</p>
+  </div>
 </footer>
+
+<script>
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 60);
+    }
+  });
+}, { threshold: 0.1 });
+
+reveals.forEach(el => observer.observe(el));
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
+</script>
 
 </body>
 </html>
